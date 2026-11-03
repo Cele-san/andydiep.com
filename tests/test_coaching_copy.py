@@ -4,7 +4,7 @@ import unittest
 
 
 ROOT = Path(__file__).resolve().parents[1]
-INDEX = ROOT / "index.html"
+INDEX = ROOT / "strategy-call" / "index.html"
 CALENDLY_URL = "https://calendly.com/diepdigitalmedia-4upt/45-min-ai-editing-chat"
 
 
