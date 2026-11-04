@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Editing Savings Calculator | Andy Diep</title>
+<meta name="description" content="See how much profit editing costs your video business each year. Four sliders, one number.">
+<link rel="canonical" href="https://andydiep.com/calculator/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://andydiep.com/calculator/">
+<meta property="og:title" content="How much profit is editing costing you?">
+<meta property="og:description" content="Four sliders, one number: the profit editing costs your video business each year.">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23DCE5EB'/%3E%3Cpath d='M16 6 C17.4 11.6 24 14.4 24 14.4 C24 14.4 18.4 17.2 16 24 C13.6 17.2 8 14.4 8 14.4 C8 14.4 14.6 11.6 16 6 Z' fill='%2383465F'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800;900&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: one focal red number; four sliders beside it; everything else tucked into "Adjust assumptions". Pixel Glass, single frosted theme by design. */
+:root{
+  color-scheme:light;
+  --canvas:#dce5eb; --wash-blue:rgba(168,202,228,.55); --wash-pink:rgba(232,205,222,.5);
+  --ink:#24354b; --ink-2:#5a677a; --accent:#446d9c; --loss:#d33a2c; --loss-soft:rgba(211,58,44,.08);
+  --glass-top:rgba(255,255,255,.62); --glass-bottom:rgba(255,255,255,.22); --glass-edge:rgba(255,255,255,.9);
+  --line:rgba(36,53,75,.1);
+  --shadow:0 18px 40px rgba(36,53,75,.1),0 2px 6px rgba(36,53,75,.06);
+  --sans:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+}
+*{box-sizing:border-box}
+html{background:var(--canvas)}
+body{margin:0;color:var(--ink-2);font-family:var(--sans);font-size:1rem;line-height:1.55;-webkit-font-smoothing:antialiased;
+  background:radial-gradient(900px 620px at 12% 6%,var(--wash-blue),transparent 70%),radial-gradient(1000px 700px at 90% 100%,var(--wash-pink),transparent 70%),var(--canvas);background-attachment:fixed;min-height:100vh}
+.wrap{max-width:1040px;margin-inline:auto;padding-block:clamp(28px,6vw,64px);padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:grid;gap:28px}
+h1{margin:0;color:var(--ink);font-weight:800;font-size:clamp(1.7rem,3.6vw,2.5rem);letter-spacing:-.03em;line-height:1.1;text-wrap:balance;max-width:22ch}
+.lede{margin:0;font-size:1.05rem;max-width:52ch}
+.glass{background:linear-gradient(145deg,var(--glass-top),var(--glass-bottom));border:1.5px solid var(--glass-edge);border-radius:20px;-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);box-shadow:var(--shadow)}
+.calc{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0}
+.inputs{padding:clamp(20px,3.5vw,36px);display:grid;gap:26px;align-content:start;min-width:0}
+.result{padding:clamp(24px,4vw,44px);border-left:1px solid var(--line);display:grid;gap:22px;align-content:center;min-width:0;text-align:center}
+
+.field{display:grid;gap:10px}
+.field label{display:flex;justify-content:space-between;align-items:baseline;gap:12px;font-size:.95rem;font-weight:500;color:var(--ink)}
+.field output{font-weight:800;font-size:1.15rem;color:var(--ink);font-variant-numeric:tabular-nums;white-space:nowrap}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:6px;border-radius:3px;background:linear-gradient(var(--accent),var(--accent)) 0/var(--p,50%) 100% no-repeat,rgba(36,53,75,.12);margin:0;cursor:pointer}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:#fff;border:2px solid var(--accent);box-shadow:0 2px 6px rgba(36,53,75,.2)}
+input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:#fff;border:2px solid var(--accent);box-shadow:0 2px 6px rgba(36,53,75,.2)}
+input[type=range]:focus-visible{outline:3px solid var(--accent);outline-offset:6px}
+
+.kicker{font-family:var(--mono);font-size:.75rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-2)}
+.big{display:block;color:var(--loss);font-weight:900;font-size:clamp(3.2rem,8vw,5.4rem);line-height:.95;letter-spacing:-.045em;font-variant-numeric:tabular-nums}
+.per{margin-top:8px;font-size:1rem;color:var(--ink-2)}
+.per b{color:var(--loss);font-weight:800}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.pair div{background:var(--loss-soft);border-radius:14px;padding:14px 12px;display:grid;gap:2px}
+.pair b{color:var(--ink);font-weight:800;font-size:1.35rem;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.pair span{font-size:.82rem;color:var(--ink-2)}
+
+details{border-top:1px solid var(--line);padding-top:16px}
+summary{cursor:pointer;list-style:none;font-size:.9rem;font-weight:600;color:var(--accent);display:flex;align-items:center;gap:8px}
+summary::-webkit-details-marker{display:none}
+summary::before{content:"+";font-weight:800;width:1em}
+details[open] summary::before{content:"−"}
+details .more{display:grid;gap:22px;margin-top:20px}
+.hint{font-size:.8rem;color:var(--ink-2)}
+.fine{font-size:.78rem;color:var(--ink-2);margin:0}
+
+.mail{padding:clamp(18px,3vw,26px);display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center;justify-content:space-between}
+.mail p{margin:0;color:var(--ink);font-weight:600}
+.mail .cta{text-decoration:none;font:inherit;font-weight:700;border:0;cursor:pointer;background:var(--ink);color:#fff;padding:12px 20px;border-radius:999px}
+.mail .cta:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+
+@media (max-width:760px){
+  .calc{grid-template-columns:minmax(0,1fr)}
+  .result{order:-1;border-left:0;border-bottom:1px solid var(--line)}
+}
+</style>
+</head>
+<body>
+
+<main class="wrap">
+  <header style="display:grid;gap:10px">
+    <h1>How much profit is editing costing you?</h1>
+    <p class="lede">Move the four sliders. The red number is what you lose each year.</p>
+  </header>
+
+  <section class="glass calc" aria-label="Editing cost calculator">
+    <div class="inputs">
+      <div class="field">
+        <label for="shorts">Short clips a week <output id="shorts-out">12</output></label>
+        <input type="range" id="shorts" min="0" max="70" step="1" value="12">
+      </div>
+      <div class="field">
+        <label for="shortCost">Editor cost per short <output id="shortCost-out">$28</output></label>
+        <input type="range" id="shortCost" min="5" max="150" step="1" value="28">
+      </div>
+      <div class="field">
+        <label for="longs">Long videos a week <output id="longs-out">1</output></label>
+        <input type="range" id="longs" min="0" max="10" step="1" value="1">
+      </div>
+      <div class="field">
+        <label for="longCost">Editor cost per long video <output id="longCost-out">$185</output></label>
+        <input type="range" id="longCost" min="25" max="500" step="5" value="185">
+      </div>
+
+      <details>
+        <summary>Adjust assumptions</summary>
+        <div class="more">
+          <div class="field">
+            <label for="save">Editing cost the system removes <output id="save-out">50%</output></label>
+            <input type="range" id="save" min="50" max="80" step="5" value="50">
+            <span class="hint">50% is cautious. 80% is the most we'd expect.</span>
+          </div>
+          <div class="field">
+            <label for="hours">Your hours on editing each week <output id="hours-out">10 h</output></label>
+            <input type="range" id="hours" min="0" max="60" step="1" value="10">
+          </div>
+          <div class="field">
+            <label for="ai">AI subscriptions a month <output id="ai-out">$100</output></label>
+            <input type="range" id="ai" min="20" max="400" step="10" value="100">
+          </div>
+          <p class="fine">Profit lost = editor spend the system could remove, minus AI subscriptions. Uses 4.33 weeks a month. An estimate from your inputs, not a guarantee.</p>
+        </div>
+      </details>
+    </div>
+
+    <div class="result" aria-live="polite">
+      <span class="kicker">Profit lost each year</span>
+      <div>
+        <span class="big" id="year">$12,336</span>
+        <div class="per"><b id="month">$1,028</b> every month, after AI costs</div>
+      </div>
+      <div class="pair">
+        <div><b id="hoursLost">5 hrs</b><span>of your week lost</span></div>
+        <div><b id="payback">2.9 mo</b><span>to pay back a $3,000 build</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="glass mail" aria-label="Book a call">
+    <p>Want that profit back? We build the AI editing workflow with you.</p>
+    <a class="cta" id="cta" href="/#step-2">Book my free call</a>
+  </section>
+</main>
+
+<script>
+(function(){
+  var $=function(id){return document.getElementById(id);};
+  var money=function(n){return '$'+Math.round(Math.max(0,n)).toLocaleString('en-US');};
+  var W=4.33, ids=['shorts','shortCost','longs','longCost','save','hours','ai'];
+  function fill(el){var p=(el.value-el.min)/(el.max-el.min)*100;el.style.setProperty('--p',p+'%');}
+  function calc(){
+    var v={};ids.forEach(function(id){var el=$(id);v[id]=+el.value;fill(el);});
+    $('shorts-out').textContent=v.shorts;
+    $('shortCost-out').textContent=money(v.shortCost);
+    $('longs-out').textContent=v.longs;
+    $('longCost-out').textContent=money(v.longCost);
+    $('save-out').textContent=v.save+'%';
+    $('hours-out').textContent=v.hours+' h';
+    $('ai-out').textContent=money(v.ai);
+    var spend=(v.shorts*v.shortCost+v.longs*v.longCost)*W;
+    var lost=spend*v.save/100-v.ai;
+    $('month').textContent=money(lost);
+    $('year').textContent=money(lost*12);
+    var h=Math.round(v.hours*v.save/100*10)/10;
+    $('hoursLost').textContent=(h%1===0?h.toFixed(0):h.toFixed(1))+' hrs';
+    var m=lost>0?3000/lost:Infinity;
+    $('payback').textContent=!isFinite(m)?'—':(m<1?'<1 mo':m.toFixed(1)+' mo');
+  }
+  ids.forEach(function(id){$(id).addEventListener('input',calc);});
+  calc();
+  $('cta').addEventListener('click',function(){try{window.goatcounter&&goatcounter.count&&goatcounter.count({path:'calculator-book-click',title:'Calculator book click',event:true});}catch(_){}});
+})();
+</script>
+
+<script data-goatcounter="https://deppandy.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</body>
+</html>
