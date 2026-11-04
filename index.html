@@ -329,6 +329,12 @@ body{background:linear-gradient(90deg,#f5fbff 0%,#edf8ff 100%);background-attach
 .btn.ghost,.wordmark{white-space:nowrap}
 .wordmark{min-height:44px}
 @media (max-width:360px){.btn.ghost{padding:.55rem .8rem;font-size:.875rem}}
+.calendly-inline-widget{position:relative}
+.calendly-inline-widget iframe{position:relative;display:block;width:100%;height:100%;border:0}
+.calendly-inline-widget::before{content:"";position:absolute;left:50%;top:96px;width:28px;height:28px;margin-left:-14px;border-radius:50%;border:3px solid rgba(124,108,242,.22);border-top-color:#7c6cf2;animation:calspin .9s linear infinite}
+.calendly-inline-widget.cal-ready::before{display:none}
+@keyframes calspin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.calendly-inline-widget::before{animation:none}}
 </style>
 
 </head>
@@ -389,8 +395,17 @@ body{background:linear-gradient(90deg,#f5fbff 0%,#edf8ff 100%);background-attach
     <p class="eyebrow">Book a fit call</p>
     <h2>Let’s find your editing bottleneck.</h2>
     <p>We’ll discuss your videos, the person running the workflow and whether the 10x Content System fits.</p>
-    <div class="calendly-inline-widget" data-url="https://calendly.com/diepdigitalmedia-4upt/45-min-ai-editing-chat?hide_gdpr_banner=1&amp;hide_event_type_details=1" style="width:100%;min-width:0;height:700px;border-radius:12px;overflow:hidden"></div>
-    <script src="https://assets.calendly.com/assets/external/widget.js" async></script>
+    <div class="calendly-inline-widget" data-url="https://calendly.com/diepdigitalmedia-4upt/45-min-ai-editing-chat?hide_gdpr_banner=1&amp;hide_event_type_details=1" style="width:100%;min-width:0;height:700px;border-radius:12px;overflow:hidden"></div><script>
+/* Calendly inline calendar without widget.js: build the iframe directly (same URL widget.js builds). */
+window.calBoot=function(el){if(!el||el.getAttribute('data-booted'))return;el.setAttribute('data-booted','1');
+  try{var u=new URL(el.getAttribute('data-url')),q=new URLSearchParams(location.search);
+    ['utm_campaign','utm_source','utm_medium','utm_content','utm_term','salesforce_uuid'].forEach(function(k){var v=q.get(k);if(v&&!u.searchParams.has(k))u.searchParams.set(k,v);});
+    u.searchParams.set('embed_domain',location.host);u.searchParams.set('embed_type','Inline');
+    var f=document.createElement('iframe');f.src=u.href;f.width='100%';f.height='100%';f.setAttribute('frameborder','0');f.title='Select a Date & Time - Calendly';
+    el.appendChild(f);}catch(e){}};
+window.addEventListener('message',function(e){if(e.origin==='https://calendly.com'&&e.data&&e.data.event){[].forEach.call(document.querySelectorAll('.calendly-inline-widget'),function(w){var f=w.querySelector('iframe');if(f&&f.contentWindow===e.source)w.classList.add('cal-ready');});}});
+calBoot(document.currentScript.previousElementSibling);
+</script>
     <a class="btn cal-btn" href="https://calendly.com/diepdigitalmedia-4upt/45-min-ai-editing-chat" target="_blank" rel="noopener">Book my free call <span aria-hidden="true">↗</span></a>
   </div>
 </div>
@@ -482,7 +497,7 @@ body{background:linear-gradient(90deg,#f5fbff 0%,#edf8ff 100%);background-attach
   <div class="glass card book-inline">
     <p class="eyebrow">Book a fit call</p>
     <h2>Let’s find your editing bottleneck.</h2>
-    <div class="calendly-lazy-widget" data-url="https://calendly.com/diepdigitalmedia-4upt/45-min-ai-editing-chat?hide_gdpr_banner=1&amp;hide_event_type_details=1" style="width:100%;min-width:0;height:700px;border-radius:12px;overflow:hidden"></div>
+    <div class="calendly-inline-widget" data-cal-lazy data-url="https://calendly.com/diepdigitalmedia-4upt/45-min-ai-editing-chat?hide_gdpr_banner=1&amp;hide_event_type_details=1" style="width:100%;min-width:0;height:700px;border-radius:12px;overflow:hidden"></div>
   </div>
 </div></section>
 
@@ -505,7 +520,7 @@ body{background:linear-gradient(90deg,#f5fbff 0%,#edf8ff 100%);background-attach
 
 <section class="section ready gutter"><div class="read">
   <h2>Are you ready?</h2>
-  <div class="glass card book-inline" style="width:100%"><div class="calendly-lazy-widget" data-url="https://calendly.com/diepdigitalmedia-4upt/45-min-ai-editing-chat?hide_gdpr_banner=1&amp;hide_event_type_details=1" style="width:100%;min-width:0;height:700px;border-radius:12px;overflow:hidden"></div></div>
+  <div class="glass card book-inline" style="width:100%"><div class="calendly-inline-widget" data-cal-lazy data-url="https://calendly.com/diepdigitalmedia-4upt/45-min-ai-editing-chat?hide_gdpr_banner=1&amp;hide_event_type_details=1" style="width:100%;min-width:0;height:700px;border-radius:12px;overflow:hidden"></div></div>
 </div></section>
 <script>/* carry utm_* from the page URL to the new-tab Calendly link (inline widgets already get them) */
 (function(){try{var q=new URLSearchParams(location.search),u=[];q.forEach(function(v,k){if(k.indexOf('utm_')===0)u.push(k+'='+encodeURIComponent(v))});if(!u.length)return;
@@ -525,18 +540,12 @@ window.addEventListener('message',function(e){try{
 
 
 <script>
-/* Boot below-the-fold Calendly widgets only when they come near the viewport. */
+/* Boot below-the-fold Calendly calendars only when they come near the viewport. */
 (function(){
-  var els=[].slice.call(document.querySelectorAll('.calendly-lazy-widget'));
-  if(!els.length) return;
-  function boot(el){
-    if(el.dataset.booted) return; el.dataset.booted='1';
-    (function go(){ if(!(window.Calendly&&Calendly.initInlineWidget)) return setTimeout(go,200);
-      el.classList.add('calendly-inline-widget');
-      Calendly.initInlineWidget({url:el.getAttribute('data-url'),parentElement:el}); })();
-  }
-  if(!('IntersectionObserver' in window)){ els.forEach(boot); return; }
-  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){io.unobserve(e.target);boot(e.target);}});},{rootMargin:'1500px 0px'});
+  var els=[].slice.call(document.querySelectorAll('[data-cal-lazy]'));
+  if(!els.length||!window.calBoot) return;
+  if(!('IntersectionObserver' in window)){ els.forEach(calBoot); return; }
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){io.unobserve(e.target);calBoot(e.target);}});},{rootMargin:'1500px 0px'});
   els.forEach(function(el){io.observe(el);});
 })();
 </script>
