@@ -335,6 +335,10 @@ body{background:linear-gradient(90deg,#f5fbff 0%,#edf8ff 100%);background-attach
 .calendly-inline-widget.cal-ready::before{display:none}
 @keyframes calspin{to{transform:rotate(360deg)}}
 @media (prefers-reduced-motion:reduce){.calendly-inline-widget::before{animation:none}}
+.calc-link{margin:2rem 0 0;padding:1.1rem 1.4rem;display:flex;flex-wrap:wrap;gap:.6rem 1.2rem;align-items:center;justify-content:space-between;background:linear-gradient(145deg,var(--pg-glass-top),var(--pg-glass-bottom));border:1.5px solid var(--pg-glass-edge);border-radius:var(--pg-radius);box-shadow:var(--pg-shadow)}
+.calc-link p{margin:0;color:var(--pg-ink);font-weight:600}
+.calc-link a{color:var(--pg-berry);font-weight:600;text-decoration:none;border-bottom:1.5px solid currentColor;white-space:nowrap}
+footer .calc-foot{margin-left:auto;color:var(--pg-ink-2);font-weight:500;text-decoration:none}
 </style>
 
 </head>
@@ -425,6 +429,7 @@ calBoot(document.currentScript.previousElementSibling);
   </div>
   <figure class="real-photo"><img src="assets/carles-a-on-a-coaching-call-2-1280.webp" srcset="assets/carles-a-on-a-coaching-call-2-720.webp 720w, assets/carles-a-on-a-coaching-call-2-1280.webp 1280w" sizes="(max-width: 762px) calc(100vw - 68px), 702px" alt="Carles A. on a coaching call" width="1280" height="720" loading="lazy" decoding="async"><figcaption>Carles A., on one of our coaching calls.</figcaption></figure>
   <blockquote class="ba-quote">&ldquo;It&rsquo;s a no-brainer. Like when you told me the investment, I was like, &lsquo;Sure.&rsquo;&rdquo;<cite>Carles A., agency owner and coaching client</cite></blockquote>
+  <div class="calc-link"><p>What is editing costing your business?</p><a href="/calculator/" data-goatcounter-click="calculator-link-results">Run your numbers in the calculator &rarr;</a></div>
 </div></section>
 
 
@@ -536,7 +541,7 @@ window.addEventListener('message',function(e){try{
 }catch(_){}});</script>
 </main>
 
-<footer class="gutter"><div class="wide"><a class="wordmark" href="#main">andy diep</a></div></footer>
+<footer class="gutter"><div class="wide"><a class="wordmark" href="#main">andy diep</a><a class="calc-foot" href="/calculator/">Editing savings calculator</a></div></footer>
 </div>
 
 
