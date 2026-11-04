@@ -510,6 +510,13 @@ body{background:linear-gradient(90deg,#f5fbff 0%,#edf8ff 100%);background-attach
 <script>/* carry utm_* from the page URL to the new-tab Calendly link (inline widgets already get them) */
 (function(){try{var q=new URLSearchParams(location.search),u=[];q.forEach(function(v,k){if(k.indexOf('utm_')===0)u.push(k+'='+encodeURIComponent(v))});if(!u.length)return;
 document.querySelectorAll('a[href*="calendly.com"]').forEach(function(a){a.href+=(a.href.indexOf('?')<0?'?':'&')+u.join('&')})}catch(e){}})();</script>
+<script data-goatcounter="https://andydiep.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+<script>/* count Calendly steps (time picked, booked) as GoatCounter events */
+window.addEventListener('message',function(e){try{
+  if(e.origin!=='https://calendly.com'||!e.data||!e.data.event)return;
+  var m=/^calendly\.(date_and_time_selected|event_scheduled)$/.exec(e.data.event);
+  if(m&&window.goatcounter&&window.goatcounter.count)window.goatcounter.count({path:'calendly-'+m[1],title:'Calendly '+m[1],event:true});
+}catch(_){}});</script>
 </main>
 
 <footer class="gutter"><div class="wide"><a class="wordmark" href="#main">andy diep</a></div></footer>
