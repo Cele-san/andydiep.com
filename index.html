@@ -101,8 +101,8 @@ a{color:var(--pg-accent)}
   padding:.5rem 1rem;font-family:var(--f-mono);font-size:.75rem;letter-spacing:.06em;color:var(--pg-ink)}
 .review-bar a{color:var(--pg-ink);font-weight:500}
 
-.top{padding-block:1.25rem}
-.top .wide{display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.top{padding-block:1rem 0}
+.top .wide{display:flex;align-items:center;justify-content:flex-end;gap:1rem}
 .wordmark{font-family:var(--f-sans);font-weight:600;font-size:1.2rem;letter-spacing:-.02em;color:var(--pg-ink);text-decoration:none;display:inline-flex;align-items:center;gap:.6rem}
 .wordmark::before{content:"";width:14px;height:14px;flex:none;
   background:radial-gradient(circle,var(--pg-berry) 2px,transparent 2.5px) 0 0/7px 7px}
@@ -115,11 +115,12 @@ a{color:var(--pg-accent)}
 .btn.ghost:hover{background:var(--pg-glass-edge)}
 
 /* Hero: content above, pixel field below the crest. Nothing sits on the dots. */
-.hero{position:relative;padding-block:2.5rem 0}
+.hero{position:relative;padding-block:.75rem 0}
+@media (max-width:640px){.hero{padding-top:1.5rem}}
 .hero .wide{display:grid;grid-template-columns:minmax(0,1fr);gap:2.25rem;position:relative;z-index:1}
 .hero .wide > *{min-width:0}
 .promise{display:grid;gap:1.1rem;align-content:start}
-.hero-subtitle{font-size:1.2rem;line-height:1.55;color:var(--pg-ink-2);max-width:36rem;font-weight:500}
+.hero-subtitle{font-size:1.2rem;line-height:1.55;color:var(--pg-ink-2);max-width:36rem;font-weight:500;text-wrap:pretty}
 .hero-action{display:flex;flex-wrap:wrap;align-items:center;gap:.75rem 1.25rem;padding-bottom:1rem}
 .hero-action span{color:var(--pg-ink-2)}
 
@@ -384,7 +385,6 @@ body{background:linear-gradient(90deg,#f5fbff 0%,#edf8ff 100%);background-attach
 </script>
 <div class="sheet">
 <header class="top gutter"><div class="wide">
-  <a class="wordmark" href="#main" aria-label="Andy Diep, top of page">andy diep</a>
   <nav aria-label="Main"><a class="btn ghost" href="#step-2">Book my free call</a></nav>
 </div></header>
 
