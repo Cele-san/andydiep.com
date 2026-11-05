@@ -323,11 +323,11 @@ body{background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg
 
 /* Narrower sheet + pixel swarm background (Andy, Oct 30). */
 body{background:linear-gradient(90deg,#f5fbff 0%,#edf8ff 100%);background-attachment:fixed}
-.sheet{max-width:1040px;margin:24px auto 32px;position:relative;z-index:1}
+.sheet{max-width:1040px;margin:30px auto 32px;position:relative;z-index:1}
 #swarm{position:fixed;inset:0;width:100vw;height:100vh;z-index:0;pointer-events:none;display:block}
-.review-bar,.skip{position:relative;z-index:2}
-@media (max-width:1088px){.sheet{margin:18px 16px 24px}}
-@media (max-width:640px){.sheet{margin:10px 8px 16px}}
+.review-bar{position:relative;z-index:2}
+@media (max-width:1088px){.sheet{margin:26px 16px 24px}}
+@media (max-width:640px){.sheet{margin:22px 8px 16px}}
 
 /* QA fixes (Nov 4): calendars fit phones, comfortable tap targets */
 .book-inline{grid-template-columns:minmax(0,1fr)}
