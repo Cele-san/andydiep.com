@@ -4,6 +4,15 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>The 10x Content System | Andy Diep</title>
+<script>/* Short video links: andydiep.com/?v=<YouTube ID> (optional &p=<placement>, default description)
+   expand to the call tracker's utm_* tags, so the calendars and links below carry them into Calendly. */
+(function(){try{var q=new URLSearchParams(location.search),v=q.get('v')||'';
+  if(!/^[A-Za-z0-9_-]{11}$/.test(v)||q.get('utm_content'))return;
+  var p=(q.get('p')||'description').replace(/[^a-z0-9-]/g,'')||'description';
+  q.set('utm_source','youtube');q.set('utm_medium','organic-video');q.set('utm_campaign','ai-editing-strategy');q.set('utm_content','yt-'+v+'--'+p);
+  history.replaceState(null,'',location.pathname+'?'+q.toString()+location.hash);
+  var n=0,t=setInterval(function(){if(window.goatcounter&&goatcounter.count){clearInterval(t);goatcounter.count({path:'yt-'+v,title:'Visit from YouTube '+v,event:true});}else if(++n>40)clearInterval(t);},250);
+}catch(e){}})();</script>
 <meta name="description" content="10x your content without hiring another editor. We build an AI editing workflow around your footage and style, then train you or one editor to run it.">
 <link rel="canonical" href="https://andydiep.com/">
 <meta property="og:type" content="website">
